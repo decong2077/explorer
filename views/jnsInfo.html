@@ -1,0 +1,133 @@
+<div class="container" style="padding-top: 50px;">
+
+    <h1>JNS
+        <small>查看JNS名字信息</small>
+    </h1>
+
+    <div id="jns-97785883" class="jnsdiv">
+        <table class="table table-striped" cellpadding="0" cellspacing="0" style="padding:0px;float:left;margin:0px;width:100%">
+            <tbody>
+            <tr>
+				<th colspan="3" align="left"><a class="hash-link" href="./#/jns/{{jnsId}}">{{jnsId}}</a> {{jnsIdError}}
+
+					<span ng-style="{ 'display': jnsIdError && chainId == '0xe52' && account.toLowerCase() == jnsContractOwner.toLowerCase() ? 'inline-block' : 'none' }">
+						<button ng-click="mintJNS(jnsId)">🔨</button>
+					</span>
+
+					<span class="pull-right"><image height="14px" src="{{logo}}"></image> {{boundAddressTag}}</span>
+				</th>
+            </tr>
+            </tbody>
+        </table>
+        <div style="padding-bottom:30px;width:100%;text-align:right;clear:both">
+			<span style="color:#999"><p style="word-break:break-all;">{{hexdata}}</p></span>
+			<input type="button" value="绑定" class="btn btn-success" ng-click="bind()"></input>
+			<button class="btn btn-secondary" ng-click="unbind()">解绑定</button>
+			<span ng-style="{ 'display': (chainId == '0xe52' && account.toLowerCase() == ownerAddress.toLowerCase()) ? 'inline-block' : 'none' }"><button class="btn btn-primary cb" ng-click="give()">📤</button></span>
+        </div>
+        <table class="table table-striped">
+            <tbody><tr>
+                <th colspan="2" style="text-align:left">概要</th>
+            </tr>
+            <tr>
+                <td>合约地址</td>
+                <td><a href="./#/address/{{contractAddress}}">{{contractAddress}}</a></td>
+            </tr>
+            <tr>
+                <td>NFT编号</td>
+                <td>{{nftId}}</td>
+            </tr>
+			<tr>
+                <td>NFT图案</td>
+				<td><image height="20px" src="{{logo}}"></image></td>
+			</tr>
+            <tr>
+                <td>持有者</td>
+                <td><a href="./#/address/{{ownerAddress}}">{{ownerAddress}}</a></td>
+            </tr>
+            <tr>
+                <td>绑定地址</td>
+                <td>
+					{{boundAddressTag}}
+                </td>
+            </tr>
+			<tr data-ng-if="boundAddressTag !== undefined && boundAddressTag !== '未绑定'">
+                <td>数字身份 DID</td>
+				<td><a href="./#/did/{{jnsId}}">{{jnsId}}（点击进入该数字身份DID资料页面）</a></td>
+			</tr>
+            <tr data-ng-if="boundAddressTag !== undefined && boundAddressTag !== '未绑定'">
+                <td>
+                    <button data-ng-disabled="!connectedToJ() || !account" ng-click="endorseJNSAmountDialog()">
+                        <span>打赏</span>
+                    </button>
+                </td>
+			</tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- dialog for input endorse JNS amount -->
+<div id="dialog-endorsejns-amount" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <center><div class="modal-header">
+                    <h4 class="modal-title"><span id="">打赏金额</span></h4>
+            </div></center>
+            <div class="modal-body">
+                <code>
+                    <div style="word-break:break-all;" id="">
+                        <div>
+                            <div>打赏金额: </div>
+                            <div><input type="radio" name="jns-endorse-amount" value="1" ng-checked="true" ng-click="disableAmountInput()"> 1 WJ</div>
+                            <div><input type="radio" name="jns-endorse-amount" value="2" ng-click="disableAmountInput()"> 2 WJ</div>
+                            <div><input type="radio" name="jns-endorse-amount" value="5" ng-click="disableAmountInput()"> 5 WJ</div>
+                            <div><input type="radio" name="jns-endorse-amount" value="10" ng-click="disableAmountInput()"> 10 WJ</div>
+                            <div><input type="radio" name="jns-endorse-amount" value="other" ng-click="enableAmountInput()"> 手动输入</div>
+                            <div>输入金额(大于0小于100 WJ): <input type="text" id="jns-endorse-amount-other-input" data-ng-disabled="disableManualInputAmount" ng-model="endorseAmountInputValue"></input> WJ</div>
+                        </div>
+                    </div>
+                </code>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="endorseJNSConfirmDialog()">确定</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of dialog for input endorse JNS amount -->
+
+<!-- dialog for endorse jns confirm -->
+<div id="dialog-endorsejns-confirm" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <center><div class="modal-header">
+                    <h4 class="modal-title"><span id="">打赏确认</span></h4>
+            </div></center>
+            <div class="modal-body">
+                <code style="color:#0000ff">
+                    <div style="word-break:break-all;" id="">
+                        向地址：<span id="jns-endorse-to"> {{realBoundAddress}} </span>
+                        打赏: <span id="jns-endorse-amount"> {{endorseJNSAmount}} </span> WJ
+                    </div>
+                    <div style="color:#ff0000;font-weight:bold;margin:5px 0 5px 0">
+                        警告: JNS打赏的过程不可逆。
+                    </div>
+                    <div style="float:right;">确定吗？</div>
+                </code>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="endorseJNSTransfer(realBoundAddress, endorseJNSAmount)">确定</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of dialog for endorse jns confirm -->

@@ -1,0 +1,59 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+/* zoomable clickable emoji e.g. the gift airdrop in the address page */
+.zoom {
+	transition: transform .2s; /* Animation */
+}
+
+.zoom a {
+	text-decoration: none !important;
+	cursor: pointer;
+}
+
+.zoom:hover {
+	transform: scale(1.5);
+}
+
+.stats {
+	border: 1px solid;
+	margin: 3px auto 3px auto;
+}
+
+.stats tr {
+	border: 1px solid;
+}
+
+.stats td {
+	border: 1px solid;
+	padding: 0 3px 0 3px;
+}
+
