@@ -123,6 +123,7 @@ angular.module('ethExplorer')
 			
 			// 检查是否是JNS域名
 			if (toAddress.endsWith('.j')) {
+				$scope.originalJNSName = toAddress; // 保存原始JNS域名
 				const jnsName = toAddress.slice(0, -2); // 移除.j后缀
 				const jns_contract = new web3.eth.Contract(jns_ABI, jns_contract_address);
 				jns_contract.methods._nslookup(jnsName).call(function (err, result) {
@@ -142,6 +143,7 @@ angular.module('ethExplorer')
 					}
 				});
 			} else if (web3.utils.isAddress(toAddress)) {
+				$scope.originalJNSName = null; // 清空JNS域名
 				$scope.realGiveToAddress = toAddress;
 				$('#dialog-give-jns-confirm').modal({keyboard:false, backdrop:'static'});
 				$('#dialog-give-jns-confirm').modal('show');
