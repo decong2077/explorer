@@ -36,9 +36,10 @@
 	
 	<div align="center">
 		<div><img src="jv.svg"></img></div>
-		<div>当前宇宙能量</div>
-		<div>Jouleverse total energy: {{energy.total}} J</div>
-		<div>(core: {{energy.core}} J, eco: {{energy.eco}} J)</div>
+		<div>-- Jouleverse energy statstics --</div>
+		<div style="font-weight:bold">free energy：{{energy.circulated}} J</div>
+		<div style="font-style:italic">reserved: {{energy.core_locked}} J (core) + {{energy.eco_locked}} J (ecosystem)</div>
+		<div>total: {{energy.total}} J</div>
 	</div>
 </div>
 
