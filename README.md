@@ -328,3 +328,15 @@ TODO:
 - fix: PORT
 - release: 0.11.1
 
+2025.9.8
+- improve: ui enhancement. contributor: decong (PR#27). review-merged by Evan.
+- improve: dynamically load 3pp libs.
+- fix: module name ethExplorer changed to jouleExplorer.
+- improve: gas unit expression improved for better understanding.
+- release: 0.11.2
+
+2025.9.8
+- improve: use app/.RPC for choosing rpc service (json format, "rpc" or ["rpc1", "rpc2"]). no .RPC will default to rpc.jnsdao.com
+- release: 0.11.3
+- fix: for not routing to /#/, use .rpc.txt instead of .RPC
+- release: 0.11.4
