@@ -22,6 +22,7 @@
 	<script src="/scripts/misc/wj.erc20.js"></script>
 	<script src="/scripts/misc/redpacket.js"></script>
 	<script src="/scripts/misc/cryptojunks.nft.js"></script>
+	<script src="/scripts/misc/boredape.nft.js"></script>
 	<!-- end of jouleverse contracts -->
 </head>
 <body class="p-4">
@@ -136,6 +137,8 @@ const abi_WJ10 = wj_ABI;
 const abi_redpacket_v0_1 = redpacket_ABI;
 
 const abi_cryptojunks = cryptojunks_ABI;
+
+const abi_boredape = boredape_ABI;
 
 const abi_timelock = timelock_ABI;
 
@@ -329,6 +332,19 @@ const contractDetailsJson = [
             }
         }
     },*/
+    {
+        "contractName": "BoredApe",
+		"contractSource": "source/boredape.sol.txt",
+		"sourceVerified": false,
+        "abi": abi_boredape,
+        "networks": {
+            "3666": {
+                "address": boredape_contract_address,
+				"ownership": "0xf2453659235606a2C979E9891412a2Ae711808D3",
+				"ownertag": "BoredApe项目方(联络人:楼兰渔夫)",
+            }
+        }
+    },
 
 ];
 
@@ -576,7 +592,7 @@ async function handleSmartContractCall(e) {
 
     // getting the data coming from the submitted form
     const data = new FormData(e.target);
-    var options = { gasLimit: 1000000 }; // Jouleverse: lower the gas limit from block.gaslimit 3m to 1m
+    var options = { gasLimit: 10000000 }; // Jouleverse: lower the gas limit from block.gaslimit 3m to 1m
     const contractName = data.get('contract-name'); // name of the smart contract
     const scFnc = data.get('function-name');  // name of the smart contract's function
 
